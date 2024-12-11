@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import com.pawpengaga.model.Producto;
 
+// Aqui iba una anotacion de @Repository que ya no es necesaria
 public interface ProductoRepository extends JpaRepository<Producto, Long> {
 
   // JPA no es recomendado para bases de datos no relacionales...
