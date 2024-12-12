@@ -35,9 +35,8 @@ public class ProductoServicio {
   /* ********************** Metodos personalizados ********************** */
 
   public List<Producto> obtenerPorMarca(String marca){
-    return productoRepo.findyByMarca(marca);
+    return productoRepo.findByMarca(marca);
   }
-
 
   public List<Producto> obtenerPorModelo(String modelo){
     return productoRepo.busquedaPorModelo(modelo);
