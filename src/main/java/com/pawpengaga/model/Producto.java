@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,5 +32,11 @@ public class Producto {
   
   @Column(nullable = false)
   private int stock;
+
+  /* AQUI FUERON OMITIDAS COSAS POR SIMPLICIDAD */
+
+  @ManyToOne
+  @JoinColumn(name = "categoria_id", nullable = false, updatable = true) // Vigila la integridad referencial
+  private Categoria categoria;
 
 }

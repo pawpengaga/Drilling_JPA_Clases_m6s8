@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.pawpengaga.model.Categoria;
 import com.pawpengaga.model.Producto;
+import com.pawpengaga.service.CategoriaServicio;
 import com.pawpengaga.service.ProductoServicio;
 
 @Controller
@@ -23,17 +25,22 @@ public class ProductoController {
   @Autowired
   ProductoServicio prodService;
 
+  @Autowired
+  CategoriaServicio catService;
+
   // Para busquedas
   @GetMapping
   public String listar(Model model, @RequestParam(required = false) String filtro){
     List<Producto> productos = (filtro == null || filtro.isEmpty()) ? prodService.listarProductos() : prodService.obtenerPorDescripcion(filtro);
-    model.addAttribute(filtro, productos);
+    List<Categoria> categorias = catService.getAllCategorias();
+    model.addAttribute("categorias", categorias);
+    model.addAttribute("productos", productos);
     return "index";
   }
 
   @PostMapping("/add")
-  public String guardar(@ModelAttribute Producto prod){
-    prodService.guardar(prod);
+  public String guardar(@ModelAttribute Producto prod, @ModelAttribute long catId){
+    prodService.guardar(prod, catId);
     return "redirect:/";
   }
 

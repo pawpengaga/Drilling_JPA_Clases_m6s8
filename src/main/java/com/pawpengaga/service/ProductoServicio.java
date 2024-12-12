@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.pawpengaga.model.Categoria;
 import com.pawpengaga.model.Producto;
+import com.pawpengaga.repository.CategoriaRepository;
 import com.pawpengaga.repository.ProductoRepository;
 
 @Service
@@ -13,6 +15,9 @@ public class ProductoServicio {
 
   @Autowired
   ProductoRepository productoRepo;
+
+  @Autowired
+  CategoriaRepository catRepo;
 
   // Se hace el CRUD normal
   public List<Producto> listarProductos(){
@@ -24,7 +29,14 @@ public class ProductoServicio {
     return productoRepo.findById(id).orElse(null);
   }
 
-  public Producto guardar(Producto prodInput){
+  public Producto guardar(Producto prodInput, long catId){
+    // Se trae el id de la categoria desde el Producto porque fue contruido por completo en la etapa de formulario
+    // Categoria cat = catRepo.findById(prodInput.getCategoria().getId() /* catId */).orElse(null);
+    Categoria cat = catRepo.findById(catId).orElse(null);
+
+    // System.out.println(catId);
+
+    if (cat != null) prodInput.setCategoria(cat);
     return productoRepo.save(prodInput);
   }
 
