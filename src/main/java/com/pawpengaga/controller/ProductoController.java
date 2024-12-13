@@ -39,8 +39,8 @@ public class ProductoController {
   }
 
   @PostMapping("/add")
-  public String guardar(@ModelAttribute Producto prod /*, @ModelAttribute long catId */){
-    prodService.guardar(prod);
+  public String guardar(@ModelAttribute Producto prod, @RequestParam Long cat_id){ // El nombre de esta variable tiene que se exactamente igual a lo que hay en name del formulario
+    prodService.guardar(prod, cat_id);
     return "redirect:/productos";
   }
 

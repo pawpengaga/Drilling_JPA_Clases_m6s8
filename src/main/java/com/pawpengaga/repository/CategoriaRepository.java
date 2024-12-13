@@ -8,6 +8,6 @@ public interface CategoriaRepository extends JpaRepository<Categoria, Long> {
 
   // Cosas como la busqueda por id ya vienen dadas por JPA
 
-  Categoria findByCategoria(String categoria);
+  Categoria findByNombre(String categoria);
 
 }

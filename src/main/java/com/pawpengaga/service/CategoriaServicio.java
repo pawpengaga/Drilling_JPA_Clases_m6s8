@@ -33,7 +33,7 @@ public class CategoriaServicio {
   /* ************************ METODOS PROPIOS ************************ */
 
   public Categoria getCategoriaPorNombre(String cat){
-    return catRepo.findByCategoria(cat);
+    return catRepo.findByNombre(cat);
   }
 
 }
