@@ -21,7 +21,7 @@ public interface ProductoRepository extends JpaRepository<Producto, Long> {
   List<Producto> busquedaPorModelo(@Param("modelo") String modelo);
 
   // Approach usando SQL normalito (Para casos especialmente complicados como retornos de subconsultas)
-  @Query("SELECT p FROM Producto WHERE p.descripcion LIKE %:descripcion%")
+  @Query("SELECT p FROM Producto p WHERE p.descripcion LIKE %:descripcion%")
   List<Producto> busquedaPorDescripcion(String descripcion);
 
 }

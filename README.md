@@ -1,5 +1,9 @@
 # Aplicación de inventario
 
+## Consideraciones
+
+- Hubo un cambio de nombre de categorias a nombre (categorias -> nombre) en algun lado del modelo. Dará problemas a futuro
+
 ## Novedades
 
 - El uso de JPA

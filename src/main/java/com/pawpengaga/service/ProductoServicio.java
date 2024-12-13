@@ -29,10 +29,10 @@ public class ProductoServicio {
     return productoRepo.findById(id).orElse(null);
   }
 
-  public Producto guardar(Producto prodInput, long catId){
+  public Producto guardar(Producto prodInput /*, long catId */){
     // Se trae el id de la categoria desde el Producto porque fue contruido por completo en la etapa de formulario
-    // Categoria cat = catRepo.findById(prodInput.getCategoria().getId() /* catId */).orElse(null);
-    Categoria cat = catRepo.findById(catId).orElse(null);
+    Categoria cat = catRepo.findById(prodInput.getCategoria().getId()).orElse(null);
+    // Categoria cat = catRepo.findById(catId).orElse(null);
 
     // System.out.println(catId);
 

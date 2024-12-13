@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://thymeleaf.org">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventario</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  </head>
+<body>
+  <section>
+    <nav class="navbar navbar-expand-lg bg-dark">
+      <div class="container-fluid px-5">
+        <a class="navbar-brand text-white" href="#">Inventario</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link text-white" th:href="@{/usuarios/inicio}">Inicio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" th:href="@{/usuarios/inicio}">Productos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" th:href="@{/usuarios/inicio}">Categorias</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </section>
+  <main class="container">   
+    <section class="mt-5">
+       <h1 class="diplay-4 mb-5">Listado de usuarios</h1>
+
+       <!-- FORMULARIO DE BUSQUEDA -->
+       <form th:action="@{/}" method="GET" class="m-3">
+         <div class="input-group">
+           <input type="text" name="filtro" id="form-control" placeholder="Buscar por descripción" />
+           <button type="submit" class="btn btn-primary">Buscar</button>
+          </div>
+        </form>
+
+        <!-- Boton y modal -->
+
+        <div>
+          <button data-bs-toggle="modal" data-bs-target="#modalProducto" type="button">Nuevo producto</button>
+        </div>
+
+        <div class="modal fade" id="modalProducto" tabindex="-1" aria-labelledby="prodModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="prodModalLabel">Producto</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <form th:action="@{/add}" method="POST" th:object="${Producto}">
+                <div class="modal-body">
+                  <div class="form-group">
+                    <label for="categoria" class="form-label">Categoria</label>
+                    <select name="cat_id" id="categoria">
+                      <!-- <option>SELECCIONE UNA CATEGORIA</option> REQUIERE UNA VALIDACION POR SI SE VA EN BLANCO -->
+                      <option th:each="cat : ${categorias}" th:value="${cat.id} th:text=${cat.nombre}"></option>
+                    </select>
+                  </div>
+                  <input type="hidden" name="id" th:value="${prod?.id}">
+                  <div class="form-group">
+                    <!-- Cuando dentro de una variable no sabemos o no si algo tiene valor, se pone el ? -->
+                    <label class="form-label" for="marca" id="marca">Marca</label>
+                    <input type="text" class="form-control" id="marca" name="marca" th:value="${prod?.marca}" required autofocus />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="modelo" id="modelo">Modelo</label>
+                    <input type="text" class="form-control" id="modelo" name="modelo" th:value="${prod?.modelo}" required autofocus />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="descripcion" id="descripcion">Descripcion</label>
+                    <input type="text" class="form-control" id="descripcion" name="descripcion" th:value="${prod?.descripcion}" required autofocus />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="stock" id="stock">Stock</label>
+                    <input type="text" class="form-control" id="stock" name="stock" th:value="${prod?.stock}" required autofocus />
+                  </div>
+                  <div>
+
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Boton y modal -->
+
+        <!-- FORMULARIO DE BUSQUEDA -->
+        
+       <table class="table table-hover">
+         <thead>
+           <tr>
+             <th scope="col">ID</th>
+             <th scope="col">Marca</th>
+             <th scope="col">Modelo</th>
+             <th scope="col">Descripcion</th>
+             <th scope="col">Stock</th>
+             <th scope="col">Acciones</th>
+           </tr>
+         </thead>
+         <tbody class="table-group-divider">
+           <!-- Se puede controlar la presencia de la lista th:assert -->
+           <tr th:each="prod : ${productos}">
+             <td th:text="${prod.id}">NO PRESENTA</td>
+             <td th:text="${prod.marca}">NO PRESENTA</td>
+             <td th:text="${prod.modelo}">NO PRESENTA</td>
+             <td th:text="${prod.descripcion}">NO PRESENTA</td>
+             <td th:text="${prod.stock}">NO PRESENTA</td>
+             <td>
+                <button class="btn btn-warning btn-sm" th:attr="data-bs-target='#modalProducto'" th:data-id="${prod.id}" data-bs-toggle="modal">Editar</button>
+                <form th:action="@{/eliminar/{id}(id=${prod.id})}" method="POST">
+                  <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                </form>
+             </td>
+           </tr>
+         </tbody>
+       </table>
+     </section>
+   </main>
+  <div th:if="${mensaje != null && tipo != null}" th:class="'me-4 mb-4 alert alert-dismissible ' + 'alert-' + ${tipo}" role="alert" style="position: absolute; bottom: 0; right: 0; min-width: 400px;">
+    <div th:text="${mensaje}"></div>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

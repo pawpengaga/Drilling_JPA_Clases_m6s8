@@ -21,16 +21,16 @@ public class Producto {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id; // Para crear un id PRIMARY KEY SERIAL
   
-  @Column(nullable = false)
+  @Column(name = "marca",nullable = false)
   private String marca; // Es NOT NULL
   
-  @Column(nullable = false)
+  @Column(name = "modelo",nullable = false)
   private String modelo;
   
-  @Column(nullable = false)
+  @Column(name = "descripcion",nullable = false)
   private String descripcion;
   
-  @Column(nullable = false)
+  @Column(name = "stock",nullable = false)
   private int stock;
 
   /* AQUI FUERON OMITIDAS COSAS POR SIMPLICIDAD */
